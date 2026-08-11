@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use or adapt the Zen Codex, please cite it."
+title: "The Zen Codex"
+abstract: >-
+  A conduct codex for autonomous AI coding agents, skinned as Zen practice — four
+  disciplines (Sōji, Shoshin, the Clear Mirror / Shōjiki, Gaman) under the ensō and
+  the shokunin's total presence, each rule carrying an observable falsifier. Part of
+  a small family of conduct harnesses.
+type: dataset
+authors:
+  - family-names: Wender
+    given-names: Arnold
+version: "1.0"
+date-released: "2026-08-11"
+license: CC-BY-4.0
+repository-code: "https://github.com/arnoldwender/zen-harness"
+keywords:
+  - AI agents
+  - agent harness
+  - conduct codex
+  - prompt engineering
+  - agent alignment

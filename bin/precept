@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+# The first utterance of the Zen Harness. Wire this as your harness startup
+# banner so it is the first thing emitted, before any agent acts.
+#   - A fixed line (one stroke of presence) prints first.
+#   - Below it, a rotating line of the day from precepts.txt — classical haiku
+#     (Bashō, Moritake) in W. G. Aston's public-domain 1899 translation. Edit
+#     precepts.txt to curate or extend. See PRECEPTS.md.
+DIR=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+PRECEPTS="$DIR/precepts.txt"
+
+cat <<'EOF'
+
+  ○   THE ZEN HARNESS   ○
+
+  One stroke, unhurried.
+  Do this one thing completely.
+EOF
+
+# --- Rotating line of the day, from precepts.txt ---
+if [ -f "$PRECEPTS" ]; then
+  N=$(grep -c . "$PRECEPTS")
+  if [ "$N" -gt 0 ]; then
+    DAY=$(date +%j | sed 's/^0*//')
+    [ -z "$DAY" ] && DAY=0
+    IDX=$(( (DAY % N) + 1 ))
+    P=$(sed -n "${IDX}p" "$PRECEPTS")
+    [ -n "$P" ] && printf '\n  ○ %s\n\n' "$P"
+  fi
+fi
