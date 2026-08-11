@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.png" alt="The Zen Harness — a conduct codex for AI coding agents" width="100%">
+</p>
+
 # The Zen Harness
 
 *The craftsman's four disciplines, held from the first line to the last. One task, done completely — and the room swept behind you.* ○
