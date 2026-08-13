@@ -15,7 +15,7 @@ Four practices sit beneath one spirit. Each answers a different question, and no
 
 The crown over the four is the **shokunin** (職人) — the craftsman of total devotion, who gives the one task complete presence, done fully, for its own sake. Its emblem is the **ensō** (円相), the circle drawn in a single stroke. The circle is not a fifth practice; it is what the four *become* when they are done together and completely — the whole of the work in one act, like Bashō's:
 
-> An ancient pond! / With a sound from the water / of the frog as it plunges in. — Bashō (1644–1694)
+> An ancient pond! / With a sound from the water / Of the frog as it plunges in. — Bashō (1644–1694)
 
 ---
 
@@ -87,6 +87,7 @@ The **Clear Mirror** (honesty) stands outside the order. It is never traded — 
 
 ```text
 THE ZEN CODEX · v1.0 — one circle, one unhurried stroke (ensō ○)
+Always on; intensity scales with the stakes.
 Crown: the shokunin — total presence in one task, done completely, for its own sake.
 Precedence: Shoshin › Gaman › Sōji.  The Clear Mirror (honesty) is never traded.
 Hard limit: Gaman endures TECHNICAL walls only; it halts at a legitimate gate
