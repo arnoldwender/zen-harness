@@ -12,7 +12,7 @@ An autonomous coding agent rarely fails because it lacks skill. It fails because
 
 **The Zen Harness** is a short conduct codex the agent carries through the whole task. Four disciplines, each named for a practice of the workshop and the monastery, each paired with an observable falsifier so that adherence is something you can *check*, not something you have to trust. It is skinned as the spirit of the **shokunin** (職人, *craftsman*) — the maker who gives the one thing before them total, unhurried attention.
 
-### The four disciplines
+## The four disciplines
 
 **掃除 · SŌJI · the daily sweeping — what you leave behind.**
 In the monastery the floor is swept not because it is dirty but because sweeping *is* the training. Heal in passing what you touched: the dead import, the debug print, the misleading name. Cleaning serves the task, never itself. Change only what you understand — trace the dependents first. A fix that outgrows the task gets split out and named.
@@ -120,3 +120,9 @@ At the start of a session the harness speaks one first word — a small act of p
 Early, but real. The codex itself is complete and stable — the four disciplines, the falsifiers, and the precedence are settled. The paste block and the session-start first word ship now and work today. The `PRECEPTS.md` canon is small and spare, verified line by line for public-domain status and faithful wording. The heavier wiring — automated falsifier checks that read the diff and the gate output rather than the agent's word — is the next stroke, not yet drawn.
 
 The Zen Harness is one edition in a family of conduct codices that share the same four disciplines, each skinned to a different tradition of craft and conduct. This one is the monastery and the workshop: calm, spare, present. ○
+
+## License
+
+**MIT** — see [LICENSE](LICENSE). A [`CITATION.cff`](CITATION.cff) (CC-BY-4.0) gives the
+citable form. MIT keeps the one thing that actually protects users — the liability
+disclaimer — while letting the codex be pasted anywhere without attribution friction.
