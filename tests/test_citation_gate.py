@@ -467,3 +467,38 @@ def test_the_gate_still_bites_next_to_a_table(repo: Path) -> None:
     r = run(repo)
     assert r.returncode == 1
     assert "unsourced-quote" in r.stdout
+
+def test_a_new_markdown_document_is_covered_without_touching_code(repo: Path) -> None:
+    """Discovery, not a list. The list is what made the gate blind.
+
+    Measured across the family: one hardcoded list or another skipped MAXIMS.md,
+    BLESSING.md, REFERENCE.md and LAWS.md — 26 attributed lines in total,
+    reported as a clean pass by a gate that never opened the file they were in.
+    """
+    (repo / "NEWDOC.md").write_text(
+        '> *A line nobody ever wrote, planted in a brand new file.* \u2014 Francis Bacon\n',
+        encoding="utf-8")
+    r = run(repo)
+    assert r.returncode == 1, "a new document was not discovered"
+    assert "NEWDOC.md" in r.stdout
+
+
+def test_boilerplate_documents_stay_out_of_scope(repo: Path) -> None:
+    """Discovery must not mean scanning the licence text for quotations."""
+    (repo / "CODE_OF_CONDUCT.md").write_text(
+        '> *A line nobody ever wrote, in boilerplate.* \u2014 Francis Bacon\n',
+        encoding="utf-8")
+    assert run(repo).returncode == 0
+
+
+def test_the_run_declares_which_documents_it_read(repo: Path) -> None:
+    """The line this gate spent a day earning.
+
+    Zero findings over zero coverage prints identically to zero findings over
+    full coverage, and the reader cannot tell them apart. So the run says which
+    documents it opened and how many attributed lines it found in each.
+    """
+    r = run(repo)
+    assert r.returncode == 0
+    assert "read " in r.stdout and "document(s)" in r.stdout
+    assert "README.md=" in r.stdout, f"coverage not reported per file:\n{r.stdout}"
