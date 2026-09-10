@@ -324,6 +324,24 @@ def extract_quotations(path: Path) -> list[tuple[int, str, str]]:
         body = line.lstrip("> ").strip()
         if not body:
             continue                                   # a spacer row inside one quote
+
+        # A TABLE ROW IS NOT A QUOTATION, and this one was measured rather than
+        # imagined. The Bushido edition documents its copyright status in a
+        # markdown table nested inside a blockquote, so every row arrives here
+        # looking like blockquote prose:
+        #
+        #     > | 2 × Sun Tzu | Lionel Giles, 1910 | public domain in the
+        #     >   **US**; **not in the EU until 2029** — Giles died 1958 |
+        #
+        # Shape A then finds a bold span closing immediately before an em dash
+        # and an attribution, and demands a source for the string
+        # "**not in the EU until 2029**" attributed to "Giles died 1958 |".
+        # Both findings were false, and both appeared in the table that exists
+        # precisely to be honest about provenance.
+        if body.startswith("|"):
+            pending = None
+            continue
+
         bullet = body.startswith("- ")
         if bullet:
             body = body[2:].strip()
