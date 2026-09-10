@@ -429,3 +429,41 @@ def test_sarif_is_written_and_well_formed(repo: Path, tmp_path: Path) -> None:
     assert doc["version"] == "2.1.0"
     assert doc["runs"][0]["results"], "SARIF carries no results for a failing run"
     assert doc["runs"][0]["results"][0]["ruleId"] == "unsourced-quote"
+
+def test_a_table_row_inside_a_blockquote_is_not_a_quotation(repo: Path) -> None:
+    """The regression that shipped: the copyright table fired the gate.
+
+    The Bushido edition documents its own provenance in a markdown table nested
+    in a blockquote. Every row arrives at the extractor looking like blockquote
+    prose, and a cell reading `**not in the EU until 2029** — Giles died 1958`
+    has exactly the shape Shape A hunts for: a delimited span closing right
+    before an em dash and an attribution.
+
+    Two findings, both false, both inside the table that exists precisely to be
+    honest about provenance. A gate that fires on the honesty section teaches
+    people to delete the honesty section.
+    """
+    (repo / "README.md").write_text(CLEAN_README + textwrap.dedent("""\
+
+        > | Lines | English | Status |
+        > | --- | --- | --- |
+        > | 2 x Sun Tzu | Lionel Giles, 1910 | **not in the EU until 2029** — Giles died 1958 |
+        > | Lao Tzu | James Legge, 1891 | **public domain everywhere** — Legge died 1897 |
+        """), encoding="utf-8")
+    r = run(repo)
+    assert r.returncode == 0, f"the gate fired on a provenance table:\n{r.stdout}"
+
+
+def test_the_gate_still_bites_next_to_a_table(repo: Path) -> None:
+    """The other half: skipping tables must not skip real citations near them."""
+    (repo / "README.md").write_text(CLEAN_README + textwrap.dedent("""\
+
+        > | Lines | Status |
+        > | --- | --- |
+        > | 1 | **fine** — nobody |
+
+        > *A line nobody ever wrote, planted to test the gate.* — Francis Bacon
+        """), encoding="utf-8")
+    r = run(repo)
+    assert r.returncode == 1
+    assert "unsourced-quote" in r.stdout
