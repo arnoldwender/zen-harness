@@ -1,0 +1,37 @@
+# One verse, and a birth year that disagrees with its own source.
+#
+# Verified 2026-09-10 against the same scan as the Basho file (Internet Archive
+# item historyofjapanes00asto, p. 296). Aston introduces it as:
+#
+#   "Another early Haikai writer was Arakida Moritake (1472-1549). The
+#    following is from his pen: - 'Thought I, the fallen flowers / Are returning
+#    to their branch; / But lo! they were butterflies.'"
+#
+# The English is verbatim.
+#
+# ASTON SAYS 1472. THIS REPO SAYS 1473, AND KEEPS 1473.
+# Modern scholarship dates Arakida Moritake's birth to 1473 (Bunmei 5); the
+# discrepancy is the ordinary lunar-to-Gregorian year-boundary problem that
+# shifts a Japanese birth year by one. The repo follows the modern date, which
+# means the dates printed beside the verse do NOT match the dates printed in the
+# edition the verse is quoted from. That is a defensible choice and an invisible
+# one, so it is written down here: a reader checking the attribution against
+# Aston will find 1472 and should not conclude the line was fabricated.
+#
+# `year` is 1899, the year of the translation, so `posthumous` is declared -
+# Moritake died in 1549.
+work: "A History of Japanese Literature"
+author: "Arakida Moritake"
+author_born: 1473
+author_died: 1549
+year: 1899
+posthumous: true
+edition: "London - William Heinemann / New York - D. Appleton, 1899. The verse is on p. 296, where Aston gives Moritake's dates as 1472-1549."
+translator: "W. G. Aston"
+translator_died: 1911
+pd_status_us: "Published 1899, pre-1930 - public domain."
+pd_status_eu: "Moritake died 1549. Translator W. G. Aston died 1911; 1911 + 70 = 1981, so the translation has been public domain in the EU since 1982."
+source_url: "https://archive.org/details/historyofjapanes00asto"
+provenance: verified
+quotes:
+  - "Thought I, the fallen flowers / Are returning to their branch; / But lo! they were butterflies."

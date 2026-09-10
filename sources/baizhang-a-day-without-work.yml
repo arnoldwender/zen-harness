@@ -1,0 +1,43 @@
+# A saying attributed to a man who left no book.
+#
+# Verified 2026-09-10. Baizhang Huaihai is a real Tang-dynasty Chan master and
+# the Library of Congress name authority (n78082575) gives his dates as
+# 720-814, which is what this repo prints. Some sources give 749-814; the LoC
+# authority is the citable one and it agrees with the repo.
+#
+# The saying is attached to him through the Chan monastic tradition and the
+# 百丈清規 (Baizhang qinggui, "Pure Rules of Baizhang"), not through anything he
+# wrote himself - the rules as they survive are a much later recompilation.
+# `year` is therefore prose rather than a number: no autograph text exists, and
+# the earliest datable written attestation was NOT established by this audit.
+# Writing a plausible year to keep the arithmetic happy is the fabrication this
+# directory exists to prevent.
+#
+# ORTHOGRAPHY. The repo prints 一日不作、一日不食 with 作. Wikipedia and several
+# other sources print 一日不做一日不食 with 做. Both characters mean "do/make" and
+# both forms circulate; 作 is the older and the commoner in Chan sources. This is
+# a variant, not an error, and it is recorded so nobody "corrects" it twice.
+#
+# THE ROMANISATION IS JAPANESE, NOT CHINESE. "ichijitsu nasazareba, ichijitsu
+# kurawazu" is the Japanese kundoku reading of the Chinese phrase - the way a
+# Japanese Zen reader voices it - not pinyin (which would be "yiri bu zuo, yiri
+# bu shi"). In a Zen-skinned repo quoting a Chinese Chan master that is a
+# deliberate framing, and it is worth stating so it does not read as an error.
+#
+# THE ENGLISH is an editorial literal gloss of the eight characters, not a
+# quotation from any named published translation. The repo does not claim
+# otherwise: it attributes the SAYING to Baizhang, which is correct, and does
+# not attribute the English to a translator.
+work: "Saying transmitted in the Chan monastic tradition, attached to the Baizhang qinggui (Pure Rules of Baizhang)"
+author: "Baizhang Huaihai (百丈懷海)"
+author_born: 720
+author_died: 814
+year: "unknown - transmitted through the monastic tradition; no autograph text, and no first written attestation date established by this audit"
+edition: "Attributed via the Baizhang qinggui, which survives only in later recompilation. Variant orthography: 一日不作 (this repo) and 一日不做 both circulate."
+pd_status_us: "A 9th-century Chinese saying - public domain. The English is a literal gloss made for this repo, not a quotation from a published translation."
+pd_status_eu: "Baizhang died 814, far beyond life+70 - public domain. The English gloss is not taken from any copyrighted translation."
+source_url: "https://id.loc.gov/authorities/names/n78082575.html"
+provenance: verified
+provenance_note: "The Chinese phrase and its attribution to Baizhang are documented; the dates match the Library of Congress name authority. Two things are stated rather than assumed: the English is an editorial literal gloss with no named translator, and the romanisation is the Japanese kundoku reading, not pinyin. What this audit did NOT establish is the earliest datable text recording the saying, which is why `year` carries prose instead of a number."
+quotes:
+  - "A day without work, a day without food."

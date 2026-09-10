@@ -1,0 +1,52 @@
+# THE WEAKEST CITATION IN THIS REPO, AND IT STAYS VISIBLE.
+#
+# The Genjokoan is real, it is Dogen's, and it was written in 1233. None of that
+# is in doubt. What could not be confirmed is the ENGLISH.
+#
+# The line as printed in CODEX.md is:
+#
+#   "To carry the self forward onto the ten thousand things - that is delusion."
+#
+# Dogen's sentence is:
+#
+#   自己をはこびて万法を修証するを迷とす
+#   jiko o hakobite banpo o shusho suru o mayoi to su
+#
+# Read against that original, the English in this repo is a loose rendering and
+# not a translation of it. It drops 修証 (shusho, "practice-and-verification"),
+# which is the working half of the sentence, and it renders 万法 (banpo, "the
+# myriad dharmas") as "the ten thousand things" - a Daoist idiom, not Dogen's
+# Buddhist term. No translator is named beside it.
+#
+# WHY THAT MATTERS MORE THAN IT LOOKS. Checked 2026-09-10: there is no
+# public-domain English translation of the Genjokoan. The first English
+# renderings date from the 1960s (Robert Aitken and Kazuaki Tanahashi) and 1972
+# (Norman Waddell and Masao Abe, The Eastern Buddhist 5:2). Aitken died in 2010,
+# so that rendering is under EU copyright until 2081; Tanahashi is living. Every
+# candidate a reader might assume this line came from is in copyright, and the
+# line matches none of them exactly.
+#
+# So the position is: an English sentence, attributed to a 13th-century author,
+# with no translator, resembling a family of renderings that are all under
+# copyright, and faithful to none of them. That is the exact shape of the defect
+# that got four repos in this family unpublished, and it is the one epigraph in
+# the Zen codex written in English alone - the other three carry the original
+# and a romanisation beside the gloss, which is what makes their provenance
+# checkable at all.
+#
+# It is marked unverified rather than deleted or quietly reworded, because the
+# decision of what this epigraph should say belongs to the repo's author, not to
+# the audit. What the audit owes is an accurate statement of what is wrong.
+work: "Shobogenzo, Genjokoan fascicle"
+author: "Dogen Zenji (Eihei Dogen)"
+author_born: 1200
+author_died: 1253
+year: 1233
+edition: "Composed 1233 for the lay student Yo Koshu. The Japanese original is public domain; the English wording in this repo corresponds to no identified published translation."
+pd_status_us: "The 13th-century Japanese original is public domain. Every English translation of the Genjokoan dates from the 1960s or later and is in copyright."
+pd_status_eu: "Dogen died 1253, so the original is public domain. No public-domain English translation exists: the earliest renderings are Aitken and Tanahashi (1960s) and Waddell and Abe (1972). Aitken died 2010, so that text is in copyright until 2081."
+source_url: "https://en.wikipedia.org/wiki/Genj%C5%8Dk%C5%8Dan"
+provenance: unverified
+provenance_note: "The attribution of the WORK is sound - Genjokoan, Dogen, 1233. The ENGLISH could not be traced to any source. It is not a translation of Dogen's sentence but a loose rendering of it: it omits 修証 (practice-and-verification) and renders 万法 (the myriad dharmas) as the Daoist 'ten thousand things'. No translator is named, and no public-domain English translation of the Genjokoan exists to have taken it from - the earliest are Aitken/Tanahashi in the 1960s and Waddell/Abe in 1972, all in copyright. Unlike the other three epigraphs in CODEX.md this one prints no original and no romanisation, so nothing beside it is checkable. Either name a translator and confirm its copyright status, or print the Japanese with a gloss declared as a gloss."
+quotes:
+  - "To carry the self forward onto the ten thousand things — that is delusion."
