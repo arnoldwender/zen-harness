@@ -1,0 +1,73 @@
+name: gate
+
+# The Zen Harness runs its own falsifier on every push. SOJI says the diff must
+# not carry churn the task never asked for; gate/proportion.py is that rule made
+# executable, and this is where it runs.
+#
+# ADVISORY BY DESIGN. This job is deliberately NOT a required status check on
+# `main` — only `check` is. A proportion finding shows up here as a red X a
+# human reads and can merge past, because this gate reasons about intent it can
+# only infer from the diff and the commit messages. Making it blocking would put
+# a machine's guess about the task in front of the person who actually has it,
+# and a gate that blocks legitimate work gets uninstalled — which catches less
+# than no gate at all.
+#
+# No step interpolates untrusted input into a shell. `github.base_ref` is a
+# branch name on THIS repository, and it still reaches the shell through `env:`,
+# where the runner sets it as a variable instead of pasting it into the command
+# text. Nothing author-controlled (title, body, commit message, head ref) is
+# read by any step here.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  proportion:
+    name: proportion gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # The gate reads a diff. A depth-1 clone has no base to diff against,
+          # and the gate would exit 2 rather than guess one.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: python -m pip install --upgrade pip pytest
+
+      - name: Self-check (the repo keeps its own promises)
+        run: python3 scripts/check.py
+
+      - name: Proportion gate
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: python3 gate/proportion.py --base "origin/${BASE_REF:-main}" --sarif proportion.sarif
+
+      - name: Mutation check (do the tests defend the gate?)
+        run: python3 tests/mutation_check.py
+
+      - name: Tests
+        run: python3 -m pytest tests/ -q
+
+      - name: Upload SARIF
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proportion-sarif
+          path: proportion.sarif
+          if-no-files-found: ignore

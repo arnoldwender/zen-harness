@@ -104,9 +104,74 @@ At the start of a session the harness speaks one first word — a small act of p
 
 ---
 
+## The gate — `gate/proportion.py`
+
+This edition carries an executable falsifier for **掃除 SŌJI**, and it is what makes this repo different from its sibling harnesses rather than a reskin of them: **the change is the size the task asked for, and no larger.**
+
+```bash
+python3 gate/proportion.py                      # diff against origin/main
+python3 gate/proportion.py --base HEAD~1
+python3 gate/proportion.py --sarif out.json
+```
+
+Exit `0` clean · `1` findings · `2` the gate itself failed. The third is not decoration: a checker that returns `1` when it crashed reads as "I found something", and one that returns `0` reads as "clean" and fails open.
+
+It reads the *diff*, which is the one thing [`scripts/check.py`](scripts/check.py) cannot see. The dead import in a file you already had open is Sōji. The reformat of forty files you were never sent to is the mission being replaced by the broom. Both look like diligence in a report; only the second shows up as churn nobody asked for.
+
+### The escape valve — `Scope:`
+
+**A commit message carrying a line**
+
+```text
+Scope: <reason>          (or, in Spanish)          Alcance: <razón>
+```
+
+**declares the change deliberately large, and the gate passes.** `--scope "<reason>"` does the same before a commit exists, for pre-commit use.
+
+The findings are still printed under `note`, so the author sees exactly what was waived — the valve waives the verdict, never the report. The Clear Mirror is not traded for a green light.
+
+This is not a loophole bolted on; it is Sōji rule 4 in executable form. *"A fix that grows is split out and **named**, not smuggled in."* Naming it is what the valve is. A gate with no valve punishes the legitimate refactor, which is the exact opposite of the codex — and a gate that cannot be satisfied by doing the right thing gets uninstalled inside a week, deservedly.
+
+### The checks
+
+| Check | Catches | Default threshold |
+|---|---|---|
+| `scope-spread` | one undeclared change fanning out across many files | more than **8** files |
+| `cleanup-ratio` | the broom becoming the mission: most of the churn is formatting, reordering or repeated renaming rather than behaviour | **50 %** of churn, once the diff exceeds **40** changed lines |
+| `undeclared-refactor` | heavy churn in a file the commit message never so much as names | more than **120** changed lines in one file |
+| `mixed-commit` | a real fix riding along with a style sweep of unrelated directories | **3** formatting-only files outside the fix's directories |
+
+Churn counts an edited line twice, once as `-` and once as `+`. A line is classified as cleanup when it is blank, is a comment in a non-prose file, reappears elsewhere in the same file whitespace aside (a move or a reindent), or is one of a *repeated* identifier substitution. That last qualifier is load-bearing: `foo(a)` → `foo(b)` has a rename's shape and is an edit, so a substitution counts as cosmetic only when the same one recurs at least three times across the diff. Without it the classifier would call the most ordinary bugfix there is "cleanup".
+
+### Configuration
+
+Every threshold lives in [`.conduct/proportion.toml`](.conduct/proportion.toml) — or `.conduct/proportion.json`, same keys. Delete the file and the built-in defaults apply. A malformed config or an unknown key is exit `2`, not a quiet fall back to defaults: measuring with thresholds the author did not choose, while reporting as though they did, is the gate lying about what it measured.
+
+[`.conduct/proportion-allow.txt`](.conduct/proportion-allow.txt) adds path globs to the built-in exemptions (lockfiles, `dist/`, `build/`, `vendor/`, `node_modules/`, snapshots, minified bundles, generated stubs). The rule of thumb: exempt a path when a tool decides its diff size rather than a person. A lockfile moves five thousand lines because one dependency moved.
+
+### The honest limit of this gate
+
+**This is the noisiest falsifier in the family, and the reason is structural: to judge whether a change is proportionate you must know what the task asked for, and the task is not in the diff.** The gate infers intent from the commit messages in the range. That is a real signal and a partial one. A legitimate refactor, a scaffold, a generated-code bump and a genuine unasked-for sweep all look alike from here.
+
+So it is built to be kept rather than to be right. Every threshold is configurable. Every finding is **advice**: SARIF level `warning`, never `error`. The CI job is deliberately **not** a required status check — a finding shows up as a red X a human reads and can merge past. And the `Scope:` valve exists so that saying "yes, this one is big on purpose" costs one line.
+
+If it still turns out noisy in daily use, the fix is to raise the thresholds in `.conduct/proportion.toml` or widen the allowlist — not to work around it. It is reported here as advisory precisely because that judgement has not yet been earned over months of real diffs.
+
+**What this gate does not do,** stated plainly rather than left to be assumed:
+
+- It automates **one** discipline. **初心 SHOSHIN**, **正直 SHŌJIKI** and **我慢 GAMAN** have no executable falsifier in this repo; they are still enforced by reading. Sibling harnesses in this family carry falsifiers for those.
+- Within Sōji itself it measures **proportion only**. Rule 1 (the dead import, the stray `print`, the misleading name left behind) and rule 3 (trace the dependents before you change a thing) are not checked here at all — a diff can be perfectly proportionate and still leave residue in every file it touched.
+- It cannot see a file git has never been told about. Untracked files are outside the diff, and the gate says so in a note rather than reporting a confident count over a tree it only half read.
+
+[`tests/mutation_check.py`](tests/mutation_check.py) deletes each check in turn and requires the suite to go red — a test that still passes with the mechanism removed is decoration that reports green forever. The escape valve and the allowlist are mutated too: both are load-bearing for whether the gate survives contact with users.
+
+---
+
 ## Status
 
-Early, but real. The codex itself is complete and stable — the four disciplines, the falsifiers, and the precedence are settled. The paste block and the session-start first word ship now and work today. The `PRECEPTS.md` canon is small and spare, verified line by line for public-domain status and faithful wording. The heavier wiring — automated falsifier checks that read the diff and the gate output rather than the agent's word — is the next stroke, not yet drawn.
+Early, but real. The codex itself is complete and stable — the four disciplines, the falsifiers, and the precedence are settled. The paste block and the session-start first word ship now and work today. The `PRECEPTS.md` canon is small and spare, verified line by line for public-domain status and faithful wording.
+
+Reported straight, as the Clear Mirror demands: **one of the four disciplines has an executable falsifier; three do not.** Sōji's proportion check runs in CI on every push, with a mutation check behind it. Shoshin, Shōjiki and Gaman are still enforced by reading. Also still open: residue detection inside Sōji itself, and a scoring pass over a session's transcript.
 
 The Zen Harness is one edition in a family of conduct codices that share the same four disciplines, each skinned to a different tradition of craft and conduct. This one is the monastery and the workshop: calm, spare, present. ○
 

@@ -4,3 +4,7 @@ node_modules/
 
 # Keep the repo's own assets/ tracked despite the case-insensitive global /Assets/ ignore (macOS)
 !/assets/
+
+# pytest arrived with gate/proportion.py; its caches are build artifacts, not source
+__pycache__/
+.pytest_cache/

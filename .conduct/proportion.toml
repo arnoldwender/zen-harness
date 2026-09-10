@@ -1,0 +1,38 @@
+# Thresholds for gate/proportion.py.
+#
+# This file is optional: delete it and the gate uses exactly these values as its
+# built-in defaults. It ships written out because a threshold you cannot see is
+# a threshold you cannot argue with, and this gate is meant to be argued with.
+#
+# Every value here sits ABOVE ordinary work rather than at it. Raise any of them
+# freely — a gate tuned to a repo is kept; a gate that fires on a normal Tuesday
+# is uninstalled, and an uninstalled gate catches nothing at all.
+#
+# `.conduct/proportion.json` with the same keys works too, for repos that would
+# rather not carry a TOML file. The TOML wins if both exist.
+
+# CHECK 1 · scope-spread — files one undeclared change may touch.
+max_files = 8
+
+# CHECK 2 · cleanup-ratio — the share of churn that may be pure cleanup
+# (blank lines, comments, moves, reformatting, repeated renames) before the
+# commit message has to say the cleanup was the point.
+cleanup_ratio = 0.5
+
+# CHECK 2 · below this much churn the ratio is noise. Churn counts an edited
+# line twice: once as `-`, once as `+`.
+min_lines_for_ratio = 40
+
+# CHECK 3 · undeclared-refactor — churn in a single file that the commit
+# message never so much as names.
+max_lines_unnamed_file = 120
+
+# CHECK 4 · mixed-commit — how many formatting-only files in unrelated
+# directories, alongside a real fix, make one diff into two changes.
+min_cosmetic_files = 3
+
+# Classification · a rename counts as cosmetic only when the SAME substitution
+# repeats this many times across the diff. Below it, `foo(a)` -> `foo(b)` is an
+# edit, not a rename — without this guard the classifier calls every one-line
+# bugfix "cosmetic", which is the most ordinary change there is.
+rename_min_occurrences = 3
