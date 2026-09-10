@@ -1,0 +1,31 @@
+# A proverb, and the repo already says so.
+#
+# 七転び八起き (nana korobi ya oki) is a standard Japanese proverb - literally
+# "seven falls, eight risings". CODEX.md attributes it to "classical proverb"
+# and not to a person, which is the correct attribution and the reason this file
+# is short: there is no author to date, no work to cite, and no translator to
+# clear. Anonymous folklore is not a weaker citation than a named one as long as
+# it is labelled as folklore, and it is.
+#
+# `author`, `author_born`, `author_died` and `year` therefore carry prose rather
+# than numbers. The alternative - inventing a compiler, a collection and a date
+# so the arithmetic has something to chew on - is the fabrication this directory
+# exists to prevent, and it would make the citation look STRONGER than it is,
+# which is the worse of the two failure modes.
+#
+# THE ENGLISH is the conventional literal rendering. "Fall seven times, rise
+# eight" is how the proverb is given in English reference works; no translator
+# is named because none is being claimed.
+work: "Japanese proverb (kotowaza)"
+author: "Anonymous - traditional Japanese proverb, attributed to no person"
+author_born: "not applicable - anonymous folklore"
+author_died: "not applicable - anonymous folklore"
+year: "unknown - traditional; no first attestation date established by this audit"
+edition: "七転び八起き / nana korobi ya oki, literally 'seven falls, eight risings'."
+pd_status_us: "Anonymous traditional proverb - no copyright subsists."
+pd_status_eu: "Anonymous traditional proverb - no copyright subsists. The English is a conventional literal rendering, not a copyrighted translation."
+source_url: "https://en.wiktionary.org/wiki/%E4%B8%83%E8%BB%A2%E3%81%B3%E5%85%AB%E8%B5%B7%E3%81%8D"
+provenance: verified
+provenance_note: "Genuine Japanese proverb, correctly labelled as a proverb rather than attributed to a person. Not established by this audit: any first attestation date, which is why `year` carries prose. The English is the conventional literal rendering with no named translator."
+quotes:
+  - "Fall seven times, rise eight."

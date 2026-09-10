@@ -1,0 +1,44 @@
+# The best-attested of the four epigraphs, with one thing worth saying.
+#
+# Verified 2026-09-10. Zeami Motokiyo (c. 1363 - c. 1443) is the Noh dramatist
+# who coined 初心忘るべからず, and it appears in his treatises - the Kakyo (花鏡),
+# completed by 1424 and transmitted to his son Motomasa, and the Fushikaden.
+# The phrase, the author, the work and the date all hold.
+#
+# WHAT THE CONDENSED FORM LEAVES OUT. Zeami's own text does not give the maxim
+# as a bare six-word phrase. It gives it three times, once for each stage of a
+# performer's life:
+#
+#   是非の初心忘るべからず   zehi no shoshin wasuru bekarazu
+#   時々の初心忘るべからず   tokidoki no shoshin wasuru bekarazu
+#   老後の初心忘るべからず   rogo no shoshin wasuru bekarazu
+#
+# The point is not "stay humble" in general but "do not forget what each stage
+# of your own beginning felt like - the failures of the apprentice, the
+# beginnings that recur mid-career, and the beginning that old age is." The bare
+# 初心忘るべからず is the proverbial condensation of those three, and it is how
+# the phrase circulates in Japanese today. The string is authentically Zeami's -
+# it is the tail of each of the three clauses - but a reader who goes to the
+# Kakyo looking for it standing alone will find it embedded, and should not
+# conclude it was invented.
+#
+# The dates are conventionally given with "c." on both ends. They are recorded
+# here as plain integers because the schema needs integers for the arithmetic,
+# and the approximation is stated in `edition` rather than hidden.
+#
+# THE ENGLISH is the standard literal gloss used in reference works, not a
+# quotation from a named published translation, and the repo does not claim
+# otherwise - it attributes the phrase to Zeami, which is correct.
+work: "Kakyo (花鏡), a treatise on the art of Noh"
+author: "Zeami Motokiyo"
+author_born: 1363
+author_died: 1443
+year: 1424
+edition: "Kakyo, completed by 1424 (Oei 31) and transmitted to Zeami's son Motomasa. Zeami's dates are conventionally given as c. 1363 - c. 1443; the integers above are those approximations. The maxim also appears in the Fushikaden."
+pd_status_us: "A 15th-century Japanese text - public domain."
+pd_status_eu: "Zeami died c. 1443, far beyond life+70 - public domain. The English is a literal gloss, not a copyrighted translation."
+source_url: "https://db2.the-noh.com/edic/2022/10/kakyo.html"
+provenance: verified
+provenance_note: "The phrase, the attribution and the 1424 date hold. Two qualifications are recorded rather than smoothed over: the Kakyo gives the maxim in three expanded clauses (zehi no / tokidoki no / rogo no shoshin wasuru bekarazu) and the bare form quoted here is the proverbial condensation of them; and the English is the standard literal gloss with no named translator."
+quotes:
+  - "Never forget the beginner's mind."

@@ -23,6 +23,11 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  schedule:
+    # Weekly, for the citation gate's --online pass only. Every other step here
+    # is offline and deterministic; this one asks whether the source URLs in
+    # sources/ still resolve, which is a question that can only go stale.
+    - cron: "0 6 * * 1"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -48,7 +53,11 @@ jobs:
           python-version: "3.12"
 
       - name: Install
-        run: python -m pip install --upgrade pip pytest
+        # pyyaml is for the citation gate. It is not required - the gate ships a
+        # minimal parser for the shape sources/*.yml actually uses - but CI runs
+        # the library path so the fallback is a fallback and not the only path
+        # anyone ever exercises.
+        run: python -m pip install --upgrade pip pytest pyyaml
 
       - name: Self-check (the repo keeps its own promises)
         run: python3 scripts/check.py
@@ -58,8 +67,26 @@ jobs:
           BASE_REF: ${{ github.base_ref }}
         run: python3 gate/proportion.py --base "origin/${BASE_REF:-main}" --sarif proportion.sarif
 
+      - name: Citation gate (every attributed quotation traces to a source)
+        # THE CLEAR MIRROR, rule 4 - "invent nothing. A number, a source, a
+        # file, a success that was not observed is not written down." This is
+        # the source clause of that rule made executable. Unlike the proportion
+        # gate above, this one IS blocking: whether a change is proportionate is
+        # a judgement, but whether a quotation has a source is a fact.
+        run: python3 gate/citations.py --sarif citations.sarif
+
+      - name: Citation gate, online (scheduled runs only)
+        # Link rot in a source URL is not a reason to block a commit that never
+        # touched the link, but it IS something to find out about before a
+        # reader does. A provenance file whose URL 404s proves nothing.
+        if: github.event_name == 'schedule'
+        run: python3 gate/citations.py --online
+
       - name: Mutation check (do the tests defend the gate?)
         run: python3 tests/mutation_check.py
+
+      - name: Mutation check (do the tests defend the citation gate?)
+        run: python3 tests/mutation_check_citations.py
 
       - name: Tests
         run: python3 -m pytest tests/ -q

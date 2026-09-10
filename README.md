@@ -102,6 +102,8 @@ At the start of a session the harness speaks one first word — a small act of p
 
 `PRECEPTS.md` holds only classical verse whose translation is public domain — Bashō and Moritake in Aston's 1899 rendering. Every line is verified against its source for both wording and public-domain status; modern or copyrighted renderings, and any source that reads as belonging to a sibling edition, are kept out by design.
 
+That claim is now something you can check rather than something you have to take. All eight were matched against the scanned first edition of Aston (Internet Archive item `historyofjapanes00asto`, pp. 295–296), the provenance of each is recorded in [`sources/`](sources/), and [`gate/citations.py`](gate/citations.py) refuses any quotation that does not resolve to one. Aston died in 1911, so the translation has been public domain in the EU since 1982 and in the US since publication.
+
 ---
 
 ## The gate — `gate/proportion.py`
@@ -167,11 +169,57 @@ If it still turns out noisy in daily use, the fix is to raise the thresholds in 
 
 ---
 
+## The second gate — `gate/citations.py`
+
+The Clear Mirror's fourth rule is *"invent nothing. A number, a source, a file, a
+success that was not observed is not written down."* This gate is the **source**
+clause of that rule made executable: every attributed quotation in this repo must
+resolve to a file in [`sources/`](sources/) carrying the work, the author, the
+translator, their death years, and the public-domain status **in the US and the
+EU separately**.
+
+```bash
+python3 gate/citations.py                  # offline
+python3 gate/citations.py --online         # also resolve every source URL
+python3 gate/citations.py --sarif out.json
+```
+
+Same exit contract: `0` clean · `1` findings · `2` the gate itself failed.
+
+**Unlike the proportion gate, this one is blocking.** That gate reasons about
+intent it can only infer, so it advises. Whether a quotation has a source is not
+a judgement call, so this one decides.
+
+It is shared byte-for-byte with the sibling harnesses, which is the only piece of
+gate logic in this family that is: a fabricated citation is the same defect in
+every tradition. Four of the ten public harnesses shipped one.
+
+**What it found here, stated plainly, because the Clear Mirror is the discipline
+this gate serves.** Ten of the eleven quotations are clean — the eight haiku match
+Aston's 1899 text verbatim, and the Baizhang, Zeami and *nana korobi* epigraphs
+carry originals that are documented and out of copyright. **One is marked
+`provenance: unverified` and stays visible:** the Dōgen line in
+[`CODEX.md`](CODEX.md). The work and the date are right; the *English* is a loose
+rendering that matches no published translation, names no translator, and cannot
+have come from a public-domain one, because none exists — every English
+*Genjōkōan* dates from the 1960s or later and is in copyright. The gate prints
+the count of unverified sources on **every** run, clean or not, so the pile
+cannot grow unwatched. See [`sources/dogen-genjokoan.yml`](sources/dogen-genjokoan.yml).
+
+**What it does not do.** It cannot tell you a translation is *good*, only that it
+is attributed to someone real who could have written it. It cannot catch an
+anachronistic honorific — the sibling repos shipped "Sir Edwin Arnold" on an 1885
+book and Arnold was knighted in 1888; no arithmetic sees that. And one shape
+escapes it: an undelimited quotation in flowing prose, which `CODEX.md` uses once
+for the frog haiku. That verse is covered where it appears in `PRECEPTS.md` and
+above, and the blind spot is named in the gate's own docstring rather than left
+to be discovered.
+
 ## Status
 
-Early, but real. The codex itself is complete and stable — the four disciplines, the falsifiers, and the precedence are settled. The paste block and the session-start first word ship now and work today. The `PRECEPTS.md` canon is small and spare, verified line by line for public-domain status and faithful wording.
+Early, but real. The codex itself is complete and stable — the four disciplines, the falsifiers, and the precedence are settled. The paste block and the session-start first word ship now and work today. The `PRECEPTS.md` canon is small and spare, verified line by line for public-domain status and faithful wording — and, since the citation gate landed, verified by something other than an assurance.
 
-Reported straight, as the Clear Mirror demands: **one of the four disciplines has an executable falsifier; three do not.** Sōji's proportion check runs in CI on every push, with a mutation check behind it. Shoshin, Shōjiki and Gaman are still enforced by reading. Also still open: residue detection inside Sōji itself, and a scoring pass over a session's transcript.
+Reported straight, as the Clear Mirror demands: **two of the four disciplines have an executable falsifier; two do not.** Sōji's proportion check runs in CI on every push, advisory, with a mutation check behind it. Shōjiki now has one too — but only the *citation* clause of rule 4, which is one clause of one rule out of that discipline's four; nothing here can see a report that reads greener than the gate, a relayed message whose meaning shifted, or an unverified claim stated with a checked claim's confidence. **Shoshin and Gaman have nothing** and are still enforced by reading. Also still open: residue detection inside Sōji itself, and a scoring pass over a session's transcript.
 
 The Zen Harness is one edition in a family of conduct codices that share the same four disciplines, each skinned to a different tradition of craft and conduct. This one is the monastery and the workshop: calm, spare, present. ○
 

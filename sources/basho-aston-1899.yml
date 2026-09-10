@@ -1,0 +1,50 @@
+# Seven haiku, one translator, one page.
+#
+# All seven were verified 2026-09-10 against the scanned first edition of
+# W. G. Aston, "A History of Japanese Literature" (1899), Internet Archive item
+# historyofjapanes00asto, on the page the scan headers as "BASHO 295". Aston
+# prints them as a run, and closes the run with the line "The following are by
+# other writers:-" - which is what establishes that these seven, and not the
+# ones after, are Basho's.
+#
+# The OCR of that page is rough because the verse is set in italics: it renders
+# "An anciejit pond!", "With a sflimdfro7n the water", "Of the frog as it
+# plimges in". Matching was done on the intact plain words around the noise, and
+# every one of the seven lines reproduces Aston verbatim.
+#
+# TWO THINGS THE OCR CANNOT SETTLE, recorded rather than guessed:
+#
+#   * "Of Miidera" - the repo prints "Miidera" with a diaeresis on the second i.
+#     The scan renders the verse line as "Of Mildera" and Aston's own prose
+#     gloss two lines below as "the temple of Miidera". An "i" and an "i-with-
+#     diaeresis" are equally likely to OCR as "l", so the scan cannot decide it.
+#     The WORDING is verbatim either way; only the diacritic is unsettled.
+#
+#   * Aston's line breaks. The repo joins each haiku with " / " separators,
+#     which is a typographic choice, not a change to the text.
+#
+# `year` is 1899, the year of the TRANSLATION being quoted, and `posthumous` is
+# therefore declared: Basho died in 1694 and could not have published in 1899.
+# That flag is the schema working as intended - an undeclared posthumous date is
+# indistinguishable from a wrong one, so it has to be said out loud.
+work: "A History of Japanese Literature"
+author: "Matsuo Basho"
+author_born: 1644
+author_died: 1694
+year: 1899
+posthumous: true
+edition: "London - William Heinemann / New York - D. Appleton, 1899, in the Short Histories of the Literatures of the World series edited by Edmund Gosse. The seven verses are on p. 295."
+translator: "W. G. Aston"
+translator_died: 1911
+pd_status_us: "Published 1899, pre-1930 - public domain."
+pd_status_eu: "Basho died 1694. Translator W. G. Aston died 1911; 1911 + 70 = 1981, so the translation has been public domain in the EU since 1982."
+source_url: "https://archive.org/details/historyofjapanes00asto"
+provenance: verified
+quotes:
+  - "An ancient pond! / With a sound from the water / Of the frog as it plunges in."
+  - "Of Miïdera / The gate I would knock at— / The moon of to-day."
+  - "I come weary, / In search of an inn— / Ah! these wistaria flowers!"
+  - "The cry of the cicada / Gives no sign / That presently it will die."
+  - "On a withered branch / A crow is sitting / This autumn eve."
+  - "Ah! the waving lespedeza, / Which spills not a drop / Of the clear dew!"
+  - "'Tis the first snow— / Just enough to bend / The gladiolus leaves!"
