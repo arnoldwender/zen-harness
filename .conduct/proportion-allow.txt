@@ -1,0 +1,20 @@
+# Paths whose size says nothing about the author's restraint.
+#
+# gate/proportion.py already carries a built-in list — lockfiles, dist/, build/,
+# vendor/, node_modules/, snapshots, minified bundles, generated stubs. Lines
+# here are ADDED to it; nothing here removes a built-in entry.
+#
+# One glob per line. `#` starts a comment. `**` crosses directory separators,
+# `*` does not. A pattern with no `/` is also matched against the bare filename,
+# so `*.snap` catches `tests/__snapshots__/a.snap`.
+#
+# The rule of thumb: exempt a path when its diff size is decided by a tool
+# rather than by a person. A lockfile moves five thousand lines because one
+# dependency moved, and counting that as churn would make this gate fire on
+# every `npm install` until somebody deleted it.
+
+# This repo has nothing beyond the built-ins yet. Examples of the shape:
+#
+# assets/**
+# docs/api-reference.generated.md
+# *.svg
