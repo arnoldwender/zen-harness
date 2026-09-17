@@ -77,6 +77,7 @@ Zen supplies three things a rule-list cannot. **Presence** — attention to the 
 
 - **Paste the block.** Drop the contents of [`codex-block.md`](codex-block.md) into the instructions your agent already reads — `AGENTS.md`, `CLAUDE.md`, a system prompt, whatever your harness loads. It is the single source the hook and your agent file share.
 - **Or wire the hook.** [`hooks/session-start.sh`](hooks/session-start.sh) emits the first word and the conduct block at the top of every session — see [hooks/](hooks/).
+- **And the live one.** [`hooks/proportion-at-stop.py`](hooks/proportion-at-stop.py) runs the gate over what the turn changed when the agent stops and tells the human — not the agent — when the change outgrew the task. See [hooks/](hooks/) and *Live, when the agent stops* below.
 - **Or install it as an Agent Skill.** [`SKILL.md`](SKILL.md) packages the same block in the
   [Agent Skills](https://agentskills.io/specification) format: clone this repository into your
   agent's skills directory as `zen-harness/` (the directory name must match the skill name).
@@ -171,6 +172,16 @@ If it still turns out noisy in daily use, the fix is to raise the thresholds in 
 
 [`tests/mutation_check.py`](tests/mutation_check.py) deletes each check in turn and requires the suite to go red — a test that still passes with the mechanism removed is decoration that reports green forever. The escape valve and the allowlist are mutated too: both are load-bearing for whether the gate survives contact with users.
 
+### Live, when the agent stops — `hooks/proportion-at-stop.py`
+
+CI reads the diff after the push. The turn is over by then, the sweep already committed, and the only person who can still weigh it is the reviewer. So the same gate also runs as a Claude Code `Stop` hook: when the agent finishes its turn, the hook diffs what **that turn** changed — the base is the commit the tree stood at when it last ran for this session, so a fan-out committed mid-turn is still measured — runs `gate/proportion.py` against it with the working directory as its root, and, if a check fires, tells the **human**:
+
+> proportion (advisory): this turn's change may be larger than the task it was sent for. [scope-spread] src/mod0.py: 10 files in one change, above the threshold of 8 (src/mod0.py, src/mod1.py, src/mod2.py, src/mod3.py, src/mod4.py, …). If the breadth is the task, say so with a `Scope:` line in the commit message; if it is not, split it. Sōji: sweeping serves the task, never itself. Nothing is blocked; a `Scope: <reason>` line in the commit message waives the verdict without hiding the report.
+
+To the human and not the agent, by default — and that follows from everything above. This is the noisiest falsifier in the family because it infers intent it cannot see; a Stop hook that sent the agent back round on every "nine files" would turn advice into a leash, and the honest thing to do with advice is to put it in front of the person who has the task. `notify` mode is `systemMessage`: shown to you, never steering the agent. `feedback` and `block` exist for whoever wants the agent to read it too, with the family's three brakes — `stop_hook_active`, no second feed of the same finding, the runtime's cap of eight continuations. A change declared with `Scope:` is recorded as declared, not reported. Receipts carry paths, counts and a commit sha, never file contents. Wiring and limits in [hooks/](hooks/); 17 tests and 6 mutants, each killed, in [`tests/`](tests/).
+
+**What cannot be measured here, said plainly:** the family's other live hooks report a false-positive rate replayed over recorded sessions. A Stop hook has no such replay — a session's tool calls are recorded, the state of its working tree at each Stop is not — so this hook's rate can only be read from its own receipts once it has run. `verdict: finding` against `ok` in `~/.local/state/zen-harness/proportion-receipts.jsonl` is that number, and until it exists the mode stays `notify`.
+
 ---
 
 ## The second gate — `gate/citations.py`
@@ -223,7 +234,7 @@ to be discovered.
 
 Early, but real. The codex itself is complete and stable — the four disciplines, the falsifiers, and the precedence are settled. The paste block and the session-start first word ship now and work today. The `PRECEPTS.md` canon is small and spare, verified line by line for public-domain status and faithful wording — and, since the citation gate landed, verified by something other than an assurance.
 
-Reported straight, as the Clear Mirror demands: **two of the four disciplines have an executable falsifier; two do not.** Sōji's proportion check runs in CI on every push, advisory, with a mutation check behind it. Shōjiki now has one too — but only the *citation* clause of rule 4, which is one clause of one rule out of that discipline's four; nothing here can see a report that reads greener than the gate, a relayed message whose meaning shifted, or an unverified claim stated with a checked claim's confidence. **Shoshin and Gaman have nothing** and are still enforced by reading. Also still open: residue detection inside Sōji itself, and a scoring pass over a session's transcript.
+Reported straight, as the Clear Mirror demands: **two of the four disciplines have an executable falsifier; two do not.** Sōji's proportion check runs in CI on every push, advisory, with a mutation check behind it — and at the end of every turn, as a Stop hook that tells the human and, by default, never the agent ([`hooks/proportion-at-stop.py`](hooks/proportion-at-stop.py)). Shōjiki now has one too — but only the *citation* clause of rule 4, which is one clause of one rule out of that discipline's four; nothing here can see a report that reads greener than the gate, a relayed message whose meaning shifted, or an unverified claim stated with a checked claim's confidence. **Shoshin and Gaman have nothing** and are still enforced by reading. Also still open: residue detection inside Sōji itself, and a scoring pass over a session's transcript.
 
 The Zen Harness is one edition in a family of conduct codices that share the same four disciplines, each skinned to a different tradition of craft and conduct. This one is the monastery and the workshop: calm, spare, present. ○
 
