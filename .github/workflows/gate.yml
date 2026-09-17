@@ -84,6 +84,32 @@ jobs:
       - name: Mutation check (do the tests defend the citation gate?)
         run: python3 tests/mutation_check_citations.py
 
+      - name: Mutation check (do the tests defend the live hook?)
+        run: python3 tests/mutation_check_proportion_hook.py
+
+      - name: Live hook (a planted fan-out at Stop is a note to the human, never a steer)
+        # The same falsifier the suite carries, run once against the real runtime
+        # payload shape: ten of twelve files touched in one turn must reach the
+        # person as `systemMessage` and must NOT continue the agent's turn. A hook
+        # that steered here would turn advice into a leash, which is the one thing
+        # this advisory gate is built never to do.
+        env:
+          PROPORTION_RECEIPTS: "off"
+        run: |
+          set -eu
+          scratch="$(mktemp -d)"
+          cd "$scratch"
+          git init -q -b main
+          git config user.email gate@example.invalid
+          git config user.name "Proportion Hook CI"
+          mkdir src
+          for i in $(seq 0 11); do printf 'VALUE_%s = %s\n' "$i" "$i" > "src/mod$i.py"; done
+          git add -A && git commit -q -m base
+          for i in $(seq 0 9); do printf 'VALUE_%s = %s\n' "$i" "$((i + 100))" > "src/mod$i.py"; done
+          printf '{"session_id":"ci","cwd":"%s","hook_event_name":"Stop","stop_hook_active":false}' "$scratch" \
+            | python3 "$GITHUB_WORKSPACE/hooks/proportion-at-stop.py" > out.json
+          python3 "$GITHUB_WORKSPACE/tests/assert_stop_note.py" out.json
+
       - name: Tests
         run: python3 -m pytest tests/ -q
 
